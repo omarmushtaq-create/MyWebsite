@@ -2,7 +2,7 @@
 
 > A modern portfolio website showcasing projects, skills, and professional work.
 
-**[View Live Site →](https://omarmushtaq-create.github.io/MyWebsite/)**
+**[View Live Site →](www.plattinfotech.org/mushtaqo)**
 
 ---
 
