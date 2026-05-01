@@ -2,7 +2,7 @@
 
 > A modern portfolio website showcasing projects, skills, and professional work.
 
-**[View Live Site →](www.plattinfotech.org/mushtaqo)**
+**[View Live Site →](https://www.plattinfotech.org/mushtaqo)**
 
 ---
 
