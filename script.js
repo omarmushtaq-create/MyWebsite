@@ -1,4 +1,6 @@
 // Edit these lists to grow the home page without touching the HTML structure.
+const siteRoot = new URL(".", document.currentScript?.src || window.location.href);
+
 const pageContent = {
     navigation: [
         { label: "Home", href: "#home", className: "active" },
@@ -32,19 +34,132 @@ const pageContent = {
     ],
     heroActions: [
         { label: "View Projects", href: "projects/", className: "hero-button-primary" },
-        { label: "Contact Me", href: "contacts/", className: "hero-button-secondary" }
+        { label: "Contact Me", href: "contacts/", className: "hero-button-secondary" },
+        { label: "Quick Launch", href: "#quick-launch", className: "hero-button-tertiary", action: "quickLaunch" }
     ],
     heroStats: [
         { value: "7+", label: "Years Programming" },
         { value: "6", label: "Featured Projects" },
         { value: "IT", label: "Platt Tech Focus" }
     ],
-    skills: ["Python", "C++", "HTML", "CSS", "JavaScript", "Docker", "Proxmox"]
+    skills: ["Python", "C++", "HTML", "CSS", "JavaScript", "Docker", "Proxmox"],
+    consoleProfiles: [
+        {
+            label: "Python",
+            command: "python portfolio.py --focus problem-solving",
+            output: [
+                "Loading skill profile: Python",
+                "7+ years of programming practice detected",
+                "Project match: Penny Doubler",
+                "Strengths: logic, math, automation, debugging"
+            ]
+        },
+        {
+            label: "Web",
+            command: "npm run design-system --portfolio",
+            output: [
+                "Loading skill profile: HTML + CSS + JavaScript",
+                "Homepage components: nav, cards, quick launch, animations",
+                "Project match: portfolio website",
+                "Strengths: responsive layout, interaction, visual polish"
+            ]
+        },
+        {
+            label: "Homelab",
+            command: "docker compose up --lab-stack",
+            output: [
+                "Loading skill profile: Docker + self-hosting",
+                "Services detected: Portainer, Heimdal, IT Tools",
+                "Project match: container dashboards and utilities",
+                "Strengths: deployment, troubleshooting, server management"
+            ]
+        },
+        {
+            label: "Virtualization",
+            command: "proxmox status --projects",
+            output: [
+                "Loading skill profile: Proxmox + remote access",
+                "VM management and lab systems online",
+                "Project match: Proxmox and Guacamole",
+                "Strengths: infrastructure, access control, systems thinking"
+            ]
+        }
+    ],
+    quickLaunch: [
+        {
+            title: "Penny Doubler",
+            type: "Project",
+            href: "projects/pennyDoubler/",
+            keywords: "python math exponential growth calculator"
+        },
+        {
+            title: "Proxmox",
+            type: "Project",
+            href: "projects/proxmoxProject/",
+            keywords: "virtualization homelab server virtual machines"
+        },
+        {
+            title: "Guacamole",
+            type: "Project",
+            href: "projects/guacamole/",
+            keywords: "remote access browser lab systems"
+        },
+        {
+            title: "Portainer",
+            type: "Project",
+            href: "projects/portainer/",
+            keywords: "docker containers logs dashboard"
+        },
+        {
+            title: "Heimdal",
+            type: "Project",
+            href: "projects/heimdal/",
+            keywords: "self hosting containers services"
+        },
+        {
+            title: "IT Tools",
+            type: "Project",
+            href: "projects/itTools/",
+            keywords: "docker utilities encode decode convert"
+        },
+        {
+            title: "HTML Basics",
+            type: "Certification",
+            href: "certificates/",
+            keywords: "sololearn web structure semantic forms"
+        },
+        {
+            title: "Python Course",
+            type: "Certification",
+            href: "certificates/",
+            keywords: "pyquest variables functions control flow"
+        },
+        {
+            title: "Cybersecurity Basics",
+            type: "Certification",
+            href: "certificates/#in-progress",
+            keywords: "security nist risk current focus"
+        },
+        {
+            title: "Email Omar",
+            type: "Contact",
+            href: "mailto:omarmushtaq2029@gmail.com",
+            keywords: "contact feedback collaboration portfolio"
+        }
+    ]
+};
+
+const getRelativeHref = (href) => {
+    if (href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) {
+        return href;
+    }
+
+    return new URL(href, siteRoot).href;
 };
 
 const createLink = ({ label, href, className = "" }) => {
     const link = document.createElement("a");
-    link.href = href;
+    link.href = getRelativeHref(href);
     link.textContent = label;
 
     if (className) {
@@ -98,10 +213,18 @@ const renderHeroActions = () => {
     }
 
     pageContent.heroActions.forEach((action) => {
-        heroActions.append(createLink({
+        const actionLink = createLink({
             ...action,
             className: `hero-button ${action.className}`.trim()
-        }));
+        });
+
+        if (action.action === "quickLaunch") {
+            actionLink.dataset.quickLaunchTrigger = "true";
+            actionLink.setAttribute("role", "button");
+            actionLink.setAttribute("aria-haspopup", "dialog");
+        }
+
+        heroActions.append(actionLink);
     });
 };
 
@@ -143,8 +266,164 @@ renderHeroActions();
 renderHeroStats();
 renderSkills();
 
-const revealItems = document.querySelectorAll(".scroll-reveal");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const renderBuildConsole = () => {
+    const filters = document.querySelector("#consoleFilters");
+    const output = document.querySelector("#consoleOutput");
+
+    if (!filters || !output) {
+        return;
+    }
+
+    let activeIndex = 0;
+    let typingTimer;
+
+    const typeProfile = (profile) => {
+        window.clearInterval(typingTimer);
+
+        const lines = [`$ ${profile.command}`, ...profile.output.map((line) => `> ${line}`)];
+        const text = lines.join("\n");
+        let index = 0;
+        output.textContent = "";
+
+        if (prefersReducedMotion) {
+            output.textContent = text;
+            return;
+        }
+
+        typingTimer = window.setInterval(() => {
+            output.textContent = text.slice(0, index);
+            index += 1;
+
+            if (index > text.length) {
+                window.clearInterval(typingTimer);
+            }
+        }, 14);
+    };
+
+    const setActiveProfile = (nextIndex) => {
+        activeIndex = nextIndex;
+
+        filters.querySelectorAll("button").forEach((button, index) => {
+            const isActive = index === activeIndex;
+            button.classList.toggle("is-active", isActive);
+            button.setAttribute("aria-pressed", String(isActive));
+        });
+
+        typeProfile(pageContent.consoleProfiles[activeIndex]);
+    };
+
+    pageContent.consoleProfiles.forEach((profile, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = profile.label;
+        button.setAttribute("aria-pressed", "false");
+        button.addEventListener("click", () => setActiveProfile(index));
+        filters.append(button);
+    });
+
+    setActiveProfile(activeIndex);
+};
+
+renderBuildConsole();
+
+const renderQuickLaunch = () => {
+    const launcher = document.createElement("section");
+    launcher.className = "quick-launch";
+    launcher.setAttribute("aria-hidden", "true");
+    launcher.innerHTML = `
+        <div class="quick-launch-panel" role="dialog" aria-modal="true" aria-labelledby="quickLaunchTitle">
+            <div class="quick-launch-header">
+                <div>
+                    <p class="eyebrow">Quick Launch</p>
+                    <h2 id="quickLaunchTitle">Find Anything</h2>
+                </div>
+                <button class="quick-launch-close" type="button" aria-label="Close quick launch">x</button>
+            </div>
+            <label class="quick-launch-search">
+                <span>Search</span>
+                <input id="quickLaunchInput" type="search" autocomplete="off" placeholder="Try Docker, Python, security...">
+            </label>
+            <div class="quick-launch-results" id="quickLaunchResults"></div>
+        </div>
+    `;
+
+    const floatingButton = document.createElement("button");
+    floatingButton.className = "quick-launch-button";
+    floatingButton.type = "button";
+    floatingButton.dataset.quickLaunchTrigger = "true";
+    floatingButton.setAttribute("aria-label", "Open quick launch");
+    floatingButton.textContent = "/";
+
+    document.body.append(launcher, floatingButton);
+
+    const input = launcher.querySelector("#quickLaunchInput");
+    const results = launcher.querySelector("#quickLaunchResults");
+    const closeButton = launcher.querySelector(".quick-launch-close");
+
+    const renderResults = () => {
+        const query = input.value.trim().toLowerCase();
+        const matches = pageContent.quickLaunch.filter((item) => {
+            const haystack = `${item.title} ${item.type} ${item.keywords}`.toLowerCase();
+            return !query || haystack.includes(query);
+        });
+
+        results.innerHTML = matches.length ? matches.map((item) => `
+            <a class="quick-launch-result" href="${getRelativeHref(item.href)}">
+                <span class="quick-launch-type">${item.type}</span>
+                <strong>${item.title}</strong>
+            </a>
+        `).join("") : `<p class="quick-launch-empty">No matching items found.</p>`;
+    };
+
+    const openLauncher = () => {
+        launcher.classList.add("is-open");
+        launcher.setAttribute("aria-hidden", "false");
+        renderResults();
+        window.setTimeout(() => input.focus(), 20);
+    };
+
+    const closeLauncher = () => {
+        launcher.classList.remove("is-open");
+        launcher.setAttribute("aria-hidden", "true");
+        input.value = "";
+    };
+
+    document.addEventListener("click", (event) => {
+        const trigger = event.target.closest("[data-quick-launch-trigger]");
+
+        if (trigger) {
+            event.preventDefault();
+            openLauncher();
+            return;
+        }
+
+        if (event.target === launcher) {
+            closeLauncher();
+        }
+    });
+
+    closeButton.addEventListener("click", closeLauncher);
+    input.addEventListener("input", renderResults);
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && launcher.classList.contains("is-open")) {
+            closeLauncher();
+        }
+
+        if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+            event.preventDefault();
+            openLauncher();
+        }
+    });
+
+    renderResults();
+};
+
+renderQuickLaunch();
+
+const revealItems = document.querySelectorAll(".scroll-reveal");
 
 if (!prefersReducedMotion) {
     document.body.classList.add("page-is-entering");

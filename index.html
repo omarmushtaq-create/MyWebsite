@@ -4,6 +4,8 @@
     <title>Omar Mushtaq Portfolio</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111315">
+    <meta name="description" content="Portfolio of Omar Mushtaq, an IT student and programmer building Python projects, web interfaces, Docker services, and homelab systems.">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -29,8 +31,24 @@
             <p id="mainInfo">Hello, my name is Omar Mushtaq. I am 15 years old, study IT at Platt Tech, and have been programming for 7 years. I mostly work with Python, but I also have experience with C++, HTML, CSS, and JavaScript. I enjoy building practical projects, including websites, games, tools, and self-hosted systems.</p>
             <div class="skill-strip" id="skillStrip" aria-label="Skills and tools"></div>
         </div>
-        <img src="./images/codeImage.jpg" alt="Code displayed on a laptop" id="omarImage">
+        <img src="./images/codeImage.jpg" alt="Code displayed on a laptop" id="omarImage" decoding="async" width="275" height="183" loading="lazy">
     </div>
+    <section class="build-console scroll-reveal" id="buildConsole" aria-labelledby="buildConsoleTitle">
+        <div class="console-copy">
+            <p class="eyebrow">Interactive Snapshot</p>
+            <h2 id="buildConsoleTitle">What I Build With</h2>
+            <p>Pick a focus area to see how my skills connect to the projects in this portfolio.</p>
+            <div class="console-filters" id="consoleFilters" aria-label="Portfolio focus filters"></div>
+        </div>
+        <div class="console-window" aria-live="polite">
+            <div class="console-topbar" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <pre id="consoleOutput"></pre>
+        </div>
+    </section>
 </main>
 <script src="script.js" defer></script>
 </body>
