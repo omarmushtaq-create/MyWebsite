@@ -157,6 +157,7 @@ h1,
 h2,
 h3 {
     font-family: var(--display-font);
+    line-height: 1.22;
 }
 
 h1 {
@@ -557,7 +558,7 @@ h3:hover {
 /* ===== Project List ===== */
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 22px;
 }
 
@@ -682,7 +683,9 @@ h3:hover {
 .contact-card h2 {
     margin: 0;
     color: var(--text);
-    font-size: 28px;
+    font-size: clamp(24px, 2vw, 28px);
+    max-width: 100%;
+    overflow-wrap: anywhere;
 }
 
 .project-card p,
@@ -696,18 +699,19 @@ h3:hover {
 
 .project-tag {
     width: fit-content;
-    min-height: 32px;
     display: inline-flex;
     align-items: center;
-    padding: 0 11px;
+    padding: 8px 11px;
     border-radius: var(--radius);
     background: rgba(56, 214, 199, 0.1);
     border: 1px solid rgba(56, 214, 199, 0.3);
     color: var(--cyan);
     font-size: 12px;
+    line-height: 1.2;
     font-weight: 950;
     letter-spacing: 1px;
     text-transform: uppercase;
+    white-space: normal;
 }
 
 .project-card:nth-child(2n) .project-tag {
@@ -843,6 +847,131 @@ h3:hover {
     backdrop-filter: blur(14px);
 }
 
+.penny-tool {
+    max-width: 980px;
+    margin: 0 auto 72px;
+    padding: 30px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-soft);
+    background: linear-gradient(150deg, var(--panel-strong), rgba(255, 255, 255, 0.045));
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(14px);
+}
+
+.penny-tool-header {
+    text-align: center;
+}
+
+.penny-tool-header h2 {
+    margin: 0;
+    font-size: 36px;
+}
+
+.penny-tool-header p:last-child {
+    max-width: 720px;
+    margin: 14px auto 0;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.penny-form {
+    margin: 26px 0;
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) minmax(140px, 0.55fr) minmax(160px, 0.45fr);
+    gap: 14px;
+    align-items: end;
+}
+
+.penny-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--amber);
+    font-size: 13px;
+    font-weight: 950;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.penny-form input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(10, 12, 14, 0.78);
+    color: var(--text);
+    font: inherit;
+    outline: none;
+}
+
+.penny-form input:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(56, 214, 199, 0.14);
+}
+
+.penny-results {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.penny-results .stat-value {
+    font-size: clamp(20px, 3vw, 32px);
+    overflow-wrap: anywhere;
+}
+
+.penny-summary {
+    margin: 22px 0;
+    padding: 16px 18px;
+    border-left: 4px solid var(--cyan);
+    border-radius: var(--radius);
+    background: rgba(56, 214, 199, 0.09);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.penny-table-wrap {
+    max-height: 420px;
+    overflow: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+
+.penny-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 640px;
+}
+
+.penny-table th,
+.penny-table td {
+    padding: 13px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+    text-align: right;
+    white-space: nowrap;
+}
+
+.penny-table th:first-child,
+.penny-table td:first-child {
+    text-align: left;
+}
+
+.penny-table th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: rgba(16, 18, 21, 0.96);
+    color: var(--amber);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.penny-table td {
+    color: var(--muted);
+}
+
 @media (max-width: 900px) {
     .page-shell {
         padding-left: 16px;
@@ -944,7 +1073,8 @@ h3:hover {
     .project-card,
     .certification-card,
     .contact-card,
-    .contact-note {
+    .contact-note,
+    .penny-tool {
         padding: 22px;
     }
 
@@ -964,6 +1094,11 @@ h3:hover {
 
     #emailLink {
         font-size: 15px;
+    }
+
+    .penny-form,
+    .penny-results {
+        grid-template-columns: 1fr;
     }
 }
 

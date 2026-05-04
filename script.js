@@ -16,11 +16,10 @@ const pageContent = {
         },
         {
             label: "Certifications",
-            href: "cirtificates/",
+            href: "certificates/",
             children: [
-                { label: "All Certifications", href: "cirtificates/" },
-                { label: "In Progress", href: "cirtificates/#in-progress" },
-                { label: "Roadmap", href: "cirtificates/#roadmap" }
+                { label: "All Certifications", href: "certificates/" },
+                { label: "In Progress", href: "certificates/#in-progress" }
             ]
         },
         {
@@ -230,3 +229,91 @@ document.addEventListener("click", (event) => {
         window.location.href = link.href;
     }, 260);
 });
+
+const pennyForm = document.querySelector("#pennyForm");
+
+const formatCurrency = (value) => new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 2
+}).format(value);
+
+const calculatePennyDoubler = (name, days) => {
+    let penny = 0.01;
+    let pennyTotal = 0.01;
+    let dailyTotal = 10000;
+    const rows = [{
+        day: 1,
+        penny,
+        pennyTotal,
+        dailyTotal
+    }];
+
+    for (let day = 2; day <= days; day += 1) {
+        penny *= 2;
+        pennyTotal += penny;
+        dailyTotal += 10000;
+
+        rows.push({
+            day,
+            penny,
+            pennyTotal,
+            dailyTotal
+        });
+    }
+
+    let winner = "Tie";
+    let summary = `After ${days} day${days === 1 ? "" : "s"}, ${name} would make the same amount with both choices.`;
+
+    if (pennyTotal > dailyTotal) {
+        winner = "Penny";
+        summary = `After ${days} day${days === 1 ? "" : "s"}, the doubling penny wins with ${formatCurrency(pennyTotal)}.`;
+    } else if (dailyTotal > pennyTotal) {
+        winner = "$10,000";
+        summary = `After ${days} day${days === 1 ? "" : "s"}, the $10,000 per day choice wins with ${formatCurrency(dailyTotal)}.`;
+    }
+
+    return {
+        rows,
+        pennyTotal,
+        dailyTotal,
+        winner,
+        summary
+    };
+};
+
+const renderPennyDoubler = () => {
+    if (!pennyForm) {
+        return;
+    }
+
+    const formData = new FormData(pennyForm);
+    const name = String(formData.get("pennyName") || "you").trim() || "you";
+    const daysInput = Number(formData.get("pennyDays"));
+    const days = Math.min(Math.max(Math.trunc(daysInput || 30), 1), 365);
+    const result = calculatePennyDoubler(name, days);
+
+    document.querySelector("#pennyDays").value = days;
+    document.querySelector("#pennyTotal").textContent = formatCurrency(result.pennyTotal);
+    document.querySelector("#dailyTotal").textContent = formatCurrency(result.dailyTotal);
+    document.querySelector("#winnerLabel").textContent = result.winner;
+    document.querySelector("#pennySummary").textContent = result.summary;
+
+    document.querySelector("#pennyTableBody").innerHTML = result.rows.map((row) => `
+        <tr>
+            <td>${row.day}</td>
+            <td>${formatCurrency(row.penny)}</td>
+            <td>${formatCurrency(row.pennyTotal)}</td>
+            <td>${formatCurrency(row.dailyTotal)}</td>
+        </tr>
+    `).join("");
+};
+
+if (pennyForm) {
+    pennyForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        renderPennyDoubler();
+    });
+
+    renderPennyDoubler();
+}

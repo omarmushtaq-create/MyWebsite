@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Omar Mushtaq Portfolio</title>
+        <title>Penny Doubler | Omar Mushtaq Portfolio</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Page Title</title>
         <link rel="stylesheet" href="../../styles.css">
     </head>
     <body>
@@ -35,10 +34,59 @@
             </nav>
         </div>
         
-        <!-- Your visible content goes here -->
         <h1>Penny Doubler</h1>
         <img src = "../../images/Penny.png" alt="Penny Doubler " id = "pennyImage" class = "projectImages">
         <p>This project is a simple Python program that shows how fast exponential growth can happen. It starts with one penny, doubles the value every day for 30 days, and calculates the final total. Building it helped me practice variables, loops, math operations, and clear problem solving.</p>
+        <section class="penny-tool scroll-reveal" aria-labelledby="pennyToolTitle">
+            <div class="penny-tool-header">
+                <p class="eyebrow">Interactive Demo</p>
+                <h2 id="pennyToolTitle">Try the Penny Doubler</h2>
+                <p>Enter your name and choose how many days to compare a doubling penny against earning $10,000 every day.</p>
+            </div>
+
+            <form class="penny-form" id="pennyForm">
+                <label for="pennyName">
+                    Name
+                    <input id="pennyName" name="pennyName" type="text" placeholder="Omar" autocomplete="name">
+                </label>
+                <label for="pennyDays">
+                    Days
+                    <input id="pennyDays" name="pennyDays" type="number" min="1" max="365" value="30" required>
+                </label>
+                <button class="projectButton" type="submit">Calculate</button>
+            </form>
+
+            <div class="penny-results" id="pennyResults" aria-live="polite">
+                <article class="stat-card">
+                    <span class="stat-value" id="pennyTotal">$0.00</span>
+                    <span class="stat-label">Penny Total</span>
+                </article>
+                <article class="stat-card">
+                    <span class="stat-value" id="dailyTotal">$0.00</span>
+                    <span class="stat-label">$10,000 Daily Total</span>
+                </article>
+                <article class="stat-card">
+                    <span class="stat-value" id="winnerLabel">Ready</span>
+                    <span class="stat-label">Winner</span>
+                </article>
+            </div>
+
+            <p class="penny-summary" id="pennySummary">Run the calculator to see which choice wins.</p>
+
+            <div class="penny-table-wrap">
+                <table class="penny-table">
+                    <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Penny Earned</th>
+                        <th>Penny Total</th>
+                        <th>$10,000 Total</th>
+                    </tr>
+                    </thead>
+                    <tbody id="pennyTableBody"></tbody>
+                </table>
+            </div>
+        </section>
         <script src="../../script.js" defer></script>
     </body>
 </html>
