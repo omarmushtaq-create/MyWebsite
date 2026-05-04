@@ -464,6 +464,16 @@ h3:hover {
     line-height: 1.7;
 }
 
+.certification-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    padding: 10px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.92);
+    box-sizing: border-box;
+}
+
 .certification-meta {
     display: flex;
     flex-wrap: wrap;
