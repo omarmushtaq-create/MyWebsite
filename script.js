@@ -1,6 +1,7 @@
 // Centralized script that loads from data.json and dynamically populates all pages
-// Always use the current page location (not script location) to resolve relative URLs correctly
-const siteRoot = new URL(".", window.location.href);
+// Determine the site root relative to the script's location
+const scriptUrl = new URL(document.currentScript.src);
+const siteRoot = new URL(".", scriptUrl);
 
 let pageContent = {
     navigation: [],
@@ -106,8 +107,45 @@ const loadData = async () => {
                 ]
             }
         ];
+        
+        // Ensure only the correct link is active
+        const currentPath = window.location.pathname;
+        pageContent.navigation.forEach(item => {
+            const itemUrl = new URL(getRelativeHref(item.href));
+            const itemPath = itemUrl.pathname;
+            
+            // Basic matching for home, and matching directory roots
+            const isHome = (currentPath === "/" || currentPath.endsWith("/index.html")) && (itemPath === "/" || itemPath.endsWith("/index.html"));
+            const isMatch = isHome || (itemPath !== "/" && currentPath.includes(itemPath));
+            
+            if (isMatch) {
+                item.className = (item.className || "") + " active";
+            } else {
+                item.className = (item.className || "").replace("active", "").trim();
+            }
+        });
+    } catch (error) {
+        console.error("Error loading data.json:", error);
+        
+        // Fallback navigation if data.json fails
+        pageContent.navigation = [
+            { label: "Home", href: "/" },
+            { label: "Projects", href: "projects/" },
+            { label: "Certifications", href: "certificates/" },
+            { label: "Contact", href: "contacts/" }
+        ];
 
-        // Build quick launch entries
+        // Ensure active class on fallback navigation
+        const currentPath = window.location.pathname;
+        pageContent.navigation.forEach(item => {
+            const itemUrl = new URL(getRelativeHref(item.href));
+            const itemPath = itemUrl.pathname;
+            const isHome = (currentPath === "/" || currentPath.endsWith("/index.html")) && (itemPath === "/" || itemPath.endsWith("/index.html"));
+            const isMatch = isHome || (itemPath !== "/" && currentPath.includes(itemPath));
+            if (isMatch) item.className = "active";
+        });
+    } finally {
+        // Build quick launch entries (if data failed, map will work on empty arrays)
         pageContent.quickLaunch = [
             ...pageContent.projects.map(project => ({
                 title: project.title,
@@ -138,15 +176,17 @@ const loadData = async () => {
         renderQuickLaunch();
         renderProjectsPage();
         renderCertificationsPage();
-    } catch (error) {
-        console.error("Error loading data.json:", error);
-        // Render with fallback data
-        renderNavigation();
-        renderHeroActions();
-        renderHeroStats();
-        renderSkills();
-        renderBuildConsole();
-        renderQuickLaunch();
+
+        // Re-initialize scroll reveal for dynamically added items
+        const newRevealItems = document.querySelectorAll(".scroll-reveal");
+        newRevealItems.forEach((item) => {
+            if (typeof revealObserver !== "undefined") {
+                revealObserver.observe(item);
+            } else {
+                // Fallback: if observer isn't ready yet, it will be handled by the global observer initialization
+                item.classList.add("is-visible");
+            }
+        });
     }
 };
 
