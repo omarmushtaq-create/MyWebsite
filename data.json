@@ -4,42 +4,56 @@
       "id": "pennyDoubler",
       "title": "Penny Doubler",
       "href": "projects/pennyDoubler/",
+      "tag": "Python",
+      "description": "A Python project that calculates how quickly a penny grows when it doubles each day, showing exponential growth through a simple, clear program.",
       "keywords": "python math exponential growth calculator"
     },
     {
       "id": "proxmoxProject",
       "title": "Proxmox",
       "href": "projects/proxmoxProject/",
+      "tag": "Virtualization",
+      "description": "A homelab virtualization setup used to create, run, and manage multiple virtual machines from one Proxmox server.",
       "keywords": "virtualization homelab server virtual machines"
     },
     {
       "id": "guacamole",
       "title": "Guacamole",
       "href": "projects/guacamole/",
+      "tag": "Remote Access",
+      "description": "A browser-based remote access setup that connects to virtual machines and makes lab systems easier to manage from anywhere.",
       "keywords": "remote access browser lab systems"
     },
     {
       "id": "portainer",
       "title": "Portainer",
       "href": "projects/portainer/",
+      "tag": "Containers",
+      "description": "A Docker management dashboard used to deploy containers, monitor services, inspect logs, and troubleshoot applications more efficiently.",
       "keywords": "docker containers logs dashboard"
     },
     {
       "id": "heimdal",
       "title": "Heimdal",
       "href": "projects/heimdal/",
+      "tag": "Self-Hosting",
+      "description": "A self-hosted service project focused on organizing containerized applications with reliable configuration and practical server management.",
       "keywords": "self hosting containers services"
     },
     {
       "id": "open-webui",
-      "title": "open-webui",
+      "title": "Open WebUI",
       "href": "projects/open-webui/",
-      "keywords": "self hosted ai"
+      "tag": "AI",
+      "description": "A self-hosted AI interface for running and managing large language models locally.",
+      "keywords": "self hosted ai llm"
     },
     {
       "id": "itTools",
       "title": "IT Tools",
       "href": "projects/itTools/",
+      "tag": "Docker Servers",
+      "description": "A self-hosted utility website that provides useful technical tools for formatting, encoding, decoding, converting data, and solving everyday IT tasks.",
       "keywords": "docker utilities encode decode convert"
     }
   ],
@@ -64,7 +78,7 @@
       "id": "cybersecurity",
       "title": "Cybersecurity Basics",
       "description": "Currently studying cybersecurity fundamentals, including common security concepts, risk management, the NIST Cybersecurity Framework, and how organizations protect systems.",
-      "issuer": "In Progress",
+      "issuer": "CompTIA",
       "status": "In Progress",
       "targetDate": "6/26"
     }
