@@ -2,7 +2,7 @@
 
 > A modern, interactive portfolio website showcasing 6+ projects, certifications, and 7+ years of programming experience.
 
-**[View Live Site →](https://omarmushtaq-create.github.io/MyWebsite/)**
+**[View Live Site →](https://plattinfotech.org/mushtaqo)**
 
 ---
 
