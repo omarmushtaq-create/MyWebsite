@@ -1,7 +1,6 @@
-// Edit data.json to grow the home page without touching the HTML structure.
+// Centralized script that loads from data.json and dynamically populates all pages
 const siteRoot = new URL(".", document.currentScript?.src || window.location.href);
 
-// Load data from data.json
 let pageContent = {
     navigation: [],
     heroActions: [
@@ -63,13 +62,16 @@ let pageContent = {
 };
 
 // Fetch and load data from data.json
-fetch(new URL("data.json", siteRoot).href)
-    .then(response => response.json())
-    .then(data => {
+const loadData = async () => {
+    try {
+        const response = await fetch(new URL("data.json", siteRoot).href);
+        if (!response.ok) throw new Error(`Failed to load data.json: ${response.status}`);
+        
+        const data = await response.json();
         pageContent.projects = data.projects || [];
         pageContent.certifications = data.certifications || [];
         
-        // Build navigation from projects
+        // Build navigation dynamically
         const projectsNav = pageContent.projects.length > 0 ? {
             label: "Projects",
             href: "projects/",
@@ -82,7 +84,6 @@ fetch(new URL("data.json", siteRoot).href)
             ]
         } : null;
 
-        // Build navigation from certifications
         const certificationsNav = {
             label: "Certifications",
             href: "certificates/",
@@ -92,9 +93,8 @@ fetch(new URL("data.json", siteRoot).href)
             ]
         };
 
-        // Set navigation
         pageContent.navigation = [
-            { label: "Home", href: "#home", className: "active" },
+            { label: "Home", href: "/", className: "active" },
             ...(projectsNav ? [projectsNav] : []),
             certificationsNav,
             {
@@ -106,7 +106,7 @@ fetch(new URL("data.json", siteRoot).href)
             }
         ];
 
-        // Build quick launch from projects and certifications
+        // Build quick launch entries
         pageContent.quickLaunch = [
             ...pageContent.projects.map(project => ({
                 title: project.title,
@@ -118,7 +118,7 @@ fetch(new URL("data.json", siteRoot).href)
                 title: cert.title,
                 type: "Certification",
                 href: cert.status === "In Progress" ? "certificates/#in-progress" : "certificates/",
-                keywords: cert.issuer.toLowerCase() + " " + cert.description.toLowerCase()
+                keywords: (cert.issuer || "").toLowerCase() + " " + (cert.description || "").toLowerCase()
             })),
             {
                 title: "Email Omar",
@@ -135,23 +135,34 @@ fetch(new URL("data.json", siteRoot).href)
         renderSkills();
         renderBuildConsole();
         renderQuickLaunch();
-    })
-    .catch(error => {
+        renderProjectsPage();
+        renderCertificationsPage();
+    } catch (error) {
         console.error("Error loading data.json:", error);
-        // Fallback: render what we can without the data
+        // Render with fallback data
         renderNavigation();
         renderHeroActions();
         renderHeroStats();
         renderSkills();
         renderBuildConsole();
         renderQuickLaunch();
-    });
+    }
+};
+
+// Load data when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadData);
+} else {
+    loadData();
+}
 
 const getRelativeHref = (href) => {
     if (href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) {
         return href;
     }
-
+    if (href === "/") {
+        return new URL(".", siteRoot).href;
+    }
     return new URL(href, siteRoot).href;
 };
 
@@ -174,6 +185,8 @@ const renderNavigation = () => {
         return;
     }
 
+    navList.innerHTML = ""; // Clear existing navigation
+
     pageContent.navigation.forEach((item) => {
         const listItem = document.createElement("li");
 
@@ -195,6 +208,15 @@ const renderNavigation = () => {
             });
 
             listItem.append(toggle, menu);
+            
+            // FIX #1: Prevent dropdown from closing on hover by keeping it visible
+            listItem.addEventListener("mouseenter", () => {
+                menu.style.display = "block";
+            });
+            
+            listItem.addEventListener("mouseleave", () => {
+                menu.style.display = "";
+            });
         } else {
             listItem.append(createLink(item));
         }
@@ -319,6 +341,113 @@ const renderBuildConsole = () => {
     setActiveProfile(activeIndex);
 };
 
+// FIX #3: Render projects page dynamically from data.json
+const renderProjectsPage = () => {
+    const projectGrid = document.querySelector("#projectGrid");
+    
+    if (!projectGrid) {
+        return;
+    }
+
+    projectGrid.innerHTML = "";
+
+    pageContent.projects.forEach((project) => {
+        const projectCard = document.createElement("article");
+        projectCard.className = "project-card";
+        
+        const tag = project.tag || "Project";
+        projectCard.innerHTML = `
+            <span class="project-tag">${tag}</span>
+            <h2>${project.title}</h2>
+            <p>${project.description || ""}</p>
+            <a class="projectButton" href="${getRelativeHref(project.href)}">Open Project</a>
+        `;
+        
+        projectGrid.append(projectCard);
+    });
+};
+
+// FIX #3: Render certifications page dynamically from data.json
+const renderCertificationsPage = () => {
+    const completedGrid = document.querySelector("#completedGrid");
+    const inProgressGrid = document.querySelector("#inProgressGrid");
+    const certSummary = document.querySelector("#certificationSummary");
+
+    if (!completedGrid || !inProgressGrid) {
+        return;
+    }
+
+    completedGrid.innerHTML = "";
+    inProgressGrid.innerHTML = "";
+
+    const completed = pageContent.certifications.filter(c => c.status === "Completed");
+    const inProgress = pageContent.certifications.filter(c => c.status === "In Progress");
+
+    // Update summary stats
+    if (certSummary) {
+        certSummary.innerHTML = `
+            <article class="stat-card">
+                <span class="stat-value">${completed.length}</span>
+                <span class="stat-label">Completed Certifications</span>
+            </article>
+            <article class="stat-card">
+                <span class="stat-value">${inProgress.length}</span>
+                <span class="stat-label">Currently In Progress</span>
+            </article>
+        `;
+    }
+
+    // Render completed certifications
+    completed.forEach((cert) => {
+        const certCard = document.createElement("article");
+        certCard.className = "certification-card";
+        
+        let cardHTML = "";
+        if (cert.image) {
+            cardHTML += `
+                <img
+                    class="certification-image"
+                    src="${cert.image}"
+                    alt="${cert.title} certificate"
+                    decoding="async"
+                    loading="lazy"
+                >
+            `;
+        }
+        
+        cardHTML += `
+            <h3>${cert.title}</h3>
+            <p>${cert.description}</p>
+            <div class="certification-meta">
+                <span>Issuer: ${cert.issuer}</span>
+                <span>Status: ${cert.status}</span>
+            </div>
+        `;
+        
+        certCard.innerHTML = cardHTML;
+        completedGrid.append(certCard);
+    });
+
+    // Render in-progress certifications
+    inProgress.forEach((cert) => {
+        const certCard = document.createElement("article");
+        certCard.className = "certification-card";
+        
+        certCard.innerHTML = `
+            <span class="project-tag">Current Focus</span>
+            <h3>${cert.title}</h3>
+            <p>${cert.description}</p>
+            <div class="certification-meta">
+                <span>Target Date: ${cert.targetDate || "TBD"}</span>
+                <span>Status: ${cert.status}</span>
+            </div>
+            <a class="projectButton" href="../contacts/">Ask About My Progress</a>
+        `;
+        
+        inProgressGrid.append(certCard);
+    });
+};
+
 const renderQuickLaunch = () => {
     const launcher = document.createElement("section");
     launcher.className = "quick-launch";
@@ -381,6 +510,7 @@ const renderQuickLaunch = () => {
         input.value = "";
     };
 
+    // FIX #1: Prevent closing when clicking on dropdown menu
     document.addEventListener("click", (event) => {
         const trigger = event.target.closest("[data-quick-launch-trigger]");
 
@@ -390,7 +520,8 @@ const renderQuickLaunch = () => {
             return;
         }
 
-        if (event.target === launcher) {
+        // Only close if clicking outside the panel
+        if (event.target === launcher || (launcher.classList.contains("is-open") && !launcher.contains(event.target))) {
             closeLauncher();
         }
     });
@@ -442,7 +573,6 @@ revealItems.forEach((item) => revealObserver.observe(item));
 
 const parallaxItems = document.querySelectorAll("[data-parallax-speed]");
 
-// Parallax is isolated here so more animated sections can reuse the same data attribute.
 const updateParallax = () => {
     const scrollY = window.scrollY;
 
