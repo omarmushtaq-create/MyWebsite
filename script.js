@@ -103,6 +103,7 @@ const loadData = async () => {
                 label: "Contact",
                 href: "contacts/",
                 children: [
+                    { label: "Contact Page", href: "contacts/" },
                     { label: "Email Me", href: "mailto:omarmushtaq2029@gmail.com" }
                 ]
             }
