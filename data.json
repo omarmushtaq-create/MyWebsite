@@ -31,6 +31,12 @@
       "keywords": "self hosting containers services"
     },
     {
+      "id": "open-webui",
+      "title": "open-webui",
+      "href": "projects/open-webui/",
+      "keywords": "self hosted ai"
+    },
+    {
       "id": "itTools",
       "title": "IT Tools",
       "href": "projects/itTools/",
