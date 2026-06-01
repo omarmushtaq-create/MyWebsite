@@ -40,14 +40,7 @@
       "description": "A self-hosted service project focused on organizing containerized applications with reliable configuration and practical server management.",
       "keywords": "self hosting containers services"
     },
-    {
-      "id": "open-webui",
-      "title": "Open WebUI",
-      "href": "projects/open-webui/",
-      "tag": "AI",
-      "description": "A self-hosted AI interface for running and managing large language models locally.",
-      "keywords": "self hosted ai llm"
-    },
+
     {
       "id": "itTools",
       "title": "IT Tools",
@@ -55,6 +48,14 @@
       "tag": "Docker Servers",
       "description": "A self-hosted utility website that provides useful technical tools for formatting, encoding, decoding, converting data, and solving everyday IT tasks.",
       "keywords": "docker utilities encode decode convert"
+    },
+    {
+      "id": "open-webui",
+      "title": "Open WebUI",
+      "href": "projects/open-webui/",
+      "tag": "AI",
+      "description": "A self-hosted AI interface for running and managing large language models locally.",
+      "keywords": "self hosted ai llm"
     }
   ],
   "certifications": [
