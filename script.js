@@ -73,18 +73,26 @@ const loadData = async () => {
         pageContent.projects = data.projects || [];
         pageContent.certifications = data.certifications || [];
         
-        // Build navigation dynamically
-        const projectsNav = pageContent.projects.length > 0 ? {
-            label: "Projects",
-            href: "projects/",
-            children: [
-                { label: "All Projects", href: "projects/" },
-                ...pageContent.projects.map(project => ({
+    // Build navigation dynamically
+    const projectsNav = pageContent.projects.length > 0 ? {
+        label: "Projects",
+        href: "projects/",
+        children: [
+            { label: "All Projects", href: "projects/" },
+            ...pageContent.projects.map(project => {
+                // Ensure href starts with projects/ if it doesn't already
+                let projectHref = project.href;
+                if (projectHref && !projectHref.startsWith("projects/") && !projectHref.startsWith("http")) {
+                    // Check if it's already a relative path that should be prefixed
+                    projectHref = `projects/${projectHref.replace(/^\//, '')}`;
+                }
+                return {
                     label: project.title,
-                    href: project.href
-                }))
-            ]
-        } : null;
+                    href: projectHref
+                };
+            })
+        ]
+    } : null;
 
         const certificationsNav = {
             label: "Certifications",
@@ -199,13 +207,16 @@ if (document.readyState === 'loading') {
 }
 
 const getRelativeHref = (href) => {
-    if (href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) {
+    if (!href) return "#";
+    if (href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") || href.startsWith("http")) {
         return href;
     }
     if (href === "/") {
         return new URL(".", siteRoot).href;
     }
-    return new URL(href, siteRoot).href;
+    // Remove leading slash for URL constructor if it's meant to be relative to siteRoot
+    const cleanHref = href.startsWith("/") ? href.slice(1) : href;
+    return new URL(cleanHref, siteRoot).href;
 };
 
 const createLink = ({ label, href, className = "" }) => {
