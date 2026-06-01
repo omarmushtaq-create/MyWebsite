@@ -338,16 +338,6 @@ h3:hover {
     position: relative;
 }
 
-.dropdown::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    height: 8px;
-    pointer-events: auto;
-}
-
 .dropdown-toggle {
     gap: 8px;
 }
@@ -365,7 +355,7 @@ h3:hover {
 .dropdown-menu {
     list-style: none;
     position: absolute;
-    top: calc(100% + 4px);
+    top: calc(100% + 12px);
     left: 50%;
     min-width: 220px;
     margin: 0;
@@ -378,7 +368,7 @@ h3:hover {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transform: translateX(-50%) translateY(6px);
+    transform: translateX(-50%) translateY(10px);
     transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
     z-index: 20;
 }
