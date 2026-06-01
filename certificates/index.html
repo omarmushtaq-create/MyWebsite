@@ -11,35 +11,7 @@
 <body>
 <div class="navbar-container">
     <nav class="navbar">
-        <ul>
-            <li><a href="../">Home</a></li>
-            <li class="dropdown">
-                <a href="../projects/" class="dropdown-toggle">Projects</a>
-                <ul class="dropdown-menu">
-                    <li><a href="../projects/">All Projects</a></li>
-                    <li><a href="../projects/pennyDoubler/">Penny Doubler</a></li>
-                    <li><a href="../projects/proxmoxProject/">Proxmox</a></li>
-                    <li><a href="../projects/guacamole/">Guacamole</a></li>
-                    <li><a href="../projects/portainer/">Portainer</a></li>
-                    <li><a href="../projects/heimdal/">Heimdal</a></li>
-                    <li><a href="../projects/itTools/">IT Tools</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="./" class="dropdown-toggle active">Certifications</a>
-                <ul class="dropdown-menu">
-                    <li><a href="./">All Certifications</a></li>
-                    <li><a href="#in-progress">In Progress</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="../contacts/" class="dropdown-toggle">Contact</a>
-                <ul class="dropdown-menu">
-                    <li><a href="../contacts/">Contact Page</a></li>
-                    <li><a href="mailto:omarmushtaq2029@gmail.com">Email Me</a></li>
-                </ul>
-            </li>
-        </ul>
+        <ul id="navList"></ul>
     </nav>
 </div>
 <main class="page-shell">
@@ -49,57 +21,17 @@
         <p class="page-lead">A collection of certifications that show the skills I have completed and the topics I am currently studying.</p>
     </section>
 
-    <section class="certification-summary scroll-reveal" aria-label="Certification summary">
-        <article class="stat-card">
-            <span class="stat-value">2</span>
-            <span class="stat-label">Completed Certifications</span>
-        </article>
-        <article class="stat-card">
-            <span class="stat-value">1</span>
-            <span class="stat-label">Currently In Progress</span>
-        </article>
+    <section class="certification-summary scroll-reveal" aria-label="Certification summary" id="certificationSummary">
+        <!-- Dynamically populated from data.json -->
     </section>
 
-    <section class="certification-section scroll-reveal">
+    <section class="certification-section scroll-reveal" id="completedSection">
         <div class="section-heading">
             <p class="eyebrow">Completed</p>
             <h2>Earned Certifications</h2>
         </div>
-        <div class="certification-grid">
-            <article class="certification-card">
-                <img
-                    class="certification-image"
-                    src="../images/HtmlCirt.png"
-                    alt="HTML Basics certificate"
-                    decoding="async"
-                    width="1754"
-                    height="1238"
-                    loading="lazy"
-                >
-                <h3>HTML Basics</h3>
-                <p>Earned a strong foundation in HTML by learning how to structure web pages, use semantic elements, add links and images, build forms, and create clean, organized content for modern websites.</p>
-                <div class="certification-meta">
-                    <span>Issuer: Sololearn</span>
-                    <span>Status: Completed</span>
-                </div>
-            </article>
-            <article class="certification-card">
-                <img
-                    class="certification-image"
-                    src="../images/PyQuest — Learn Python in 3 Days-1.png"
-                    alt="PyQuest Learn Python in 3 Days certificate"
-                    decoding="async"
-                    width="1471"
-                    height="1545"
-                    loading="lazy"
-                >
-                <h3>PyQuest: Learn Python in 3 Days</h3>
-                <p>Completed a focused Python course covering programming fundamentals, including variables, data types, control flow, functions, and problem-solving with code.</p>
-                <div class="certification-meta">
-                    <span>Issuer: PyQuest</span>
-                    <span>Status: Completed</span>
-                </div>
-            </article>
+        <div class="certification-grid" id="completedGrid">
+            <!-- Dynamically populated from data.json -->
         </div>
     </section>
 
@@ -108,20 +40,10 @@
             <p class="eyebrow">Active Study</p>
             <h2>In Progress</h2>
         </div>
-        <div class="certification-grid">
-            <article class="certification-card">
-                <span class="project-tag">Current Focus</span>
-                <h3>Cybersecurity Basics</h3>
-                <p>Currently studying cybersecurity fundamentals, including common security concepts, risk management, the NIST Cybersecurity Framework, and how organizations protect systems and data.</p>
-                <div class="certification-meta">
-                    <span>Target Date: 6/26</span>
-                    <span>Status: In Progress</span>
-                </div>
-                <a class="projectButton" href="../contacts/">Ask About My Progress</a>
-            </article>
+        <div class="certification-grid" id="inProgressGrid">
+            <!-- Dynamically populated from data.json -->
         </div>
     </section>
-
 
 </main>
 <script src="../script.js" defer></script>
