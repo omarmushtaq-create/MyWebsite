@@ -11,35 +11,7 @@
 <body>
 <div class="navbar-container">
     <nav class="navbar">
-        <ul>
-            <li><a href="../">Home</a></li>
-            <li class="dropdown">
-                <a href="./" class="dropdown-toggle active">Projects</a>
-                <ul class="dropdown-menu">
-                    <li><a href="./">All Projects</a></li>
-                    <li><a href="./pennyDoubler/">Penny Doubler</a></li>
-                    <li><a href="./proxmoxProject/">Proxmox</a></li>
-                    <li><a href="./guacamole/">Guacamole</a></li>
-                    <li><a href="./portainer/">Portainer</a></li>
-                    <li><a href="./heimdal/">Heimdal</a></li>
-                    <li><a href="./itTools/">IT Tools</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="../certificates/" class="dropdown-toggle">Certifications</a>
-                <ul class="dropdown-menu">
-                    <li><a href="../certificates/">All Certifications</a></li>
-                    <li><a href="../certificates/#in-progress">In Progress</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="../contacts/" class="dropdown-toggle">Contact</a>
-                <ul class="dropdown-menu">
-                    <li><a href="../contacts/">Contact Page</a></li>
-                    <li><a href="mailto:omarmushtaq2029@gmail.com">Email Me</a></li>
-                </ul>
-            </li>
-        </ul>
+        <ul id="navList"></ul>
     </nav>
 </div>
 <main class="page-shell">
@@ -48,43 +20,8 @@
         <h1 id="projectsHeader">Projects</h1>
         <p class="page-lead">A collection of programming, virtualization, container, and self-hosted infrastructure projects built through hands-on setup, testing, and troubleshooting.</p>
     </section>
-    <section class="project-grid scroll-reveal">
-        <article class="project-card">
-            <span class="project-tag">Python</span>
-            <h2>Penny Doubler</h2>
-            <p>A Python project that calculates how quickly a penny grows when it doubles each day, showing exponential growth through a simple, clear program.</p>
-            <a class="projectButton" href="./pennyDoubler/">Open Project</a>
-        </article>
-        <article class="project-card">
-            <span class="project-tag">Virtualization</span>
-            <h2>Proxmox</h2>
-            <p>A homelab virtualization setup used to create, run, and manage multiple virtual machines from one Proxmox server.</p>
-            <a class="projectButton" href="./proxmoxProject/">Open Project</a>
-        </article>
-        <article class="project-card">
-            <span class="project-tag">Remote Access</span>
-            <h2>Guacamole</h2>
-            <p>A browser-based remote access setup that connects to virtual machines and makes lab systems easier to manage from anywhere.</p>
-            <a class="projectButton" href="./guacamole/">Open Project</a>
-        </article>
-        <article class="project-card">
-            <span class="project-tag">Containers</span>
-            <h2>Portainer</h2>
-            <p>A Docker management dashboard used to deploy containers, monitor services, inspect logs, and troubleshoot applications more efficiently.</p>
-            <a class="projectButton" href="./portainer/">Open Project</a>
-        </article>
-        <article class="project-card">
-            <span class="project-tag">Self-Hosting</span>
-            <h2>Heimdal</h2>
-            <p>A self-hosted service project focused on organizing containerized applications with reliable configuration and practical server management.</p>
-            <a class="projectButton" href="./heimdal/">Open Project</a>
-        </article>
-        <article class="project-card">
-            <span class="project-tag">Docker Servers</span>
-            <h2>IT Tools</h2>
-            <p>A self-hosted utility website that provides useful technical tools for formatting, encoding, decoding, converting data, and solving everyday IT tasks.</p>
-            <a class="projectButton" href="./itTools/">Open Project</a>
-        </article>
+    <section class="project-grid scroll-reveal" id="projectGrid">
+        <!-- Dynamically populated from data.json -->
     </section>
 </main>
 <script src="../script.js" defer></script>
