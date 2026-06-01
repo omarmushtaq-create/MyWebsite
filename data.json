@@ -1,0 +1,66 @@
+{
+  "projects": [
+    {
+      "id": "pennyDoubler",
+      "title": "Penny Doubler",
+      "href": "projects/pennyDoubler/",
+      "keywords": "python math exponential growth calculator"
+    },
+    {
+      "id": "proxmoxProject",
+      "title": "Proxmox",
+      "href": "projects/proxmoxProject/",
+      "keywords": "virtualization homelab server virtual machines"
+    },
+    {
+      "id": "guacamole",
+      "title": "Guacamole",
+      "href": "projects/guacamole/",
+      "keywords": "remote access browser lab systems"
+    },
+    {
+      "id": "portainer",
+      "title": "Portainer",
+      "href": "projects/portainer/",
+      "keywords": "docker containers logs dashboard"
+    },
+    {
+      "id": "heimdal",
+      "title": "Heimdal",
+      "href": "projects/heimdal/",
+      "keywords": "self hosting containers services"
+    },
+    {
+      "id": "itTools",
+      "title": "IT Tools",
+      "href": "projects/itTools/",
+      "keywords": "docker utilities encode decode convert"
+    }
+  ],
+  "certifications": [
+    {
+      "id": "htmlBasics",
+      "title": "HTML Basics",
+      "image": "../images/HtmlCirt.png",
+      "description": "Earned a strong foundation in HTML by learning how to structure web pages, use semantic elements, add links and images, build forms, and create clean, organized content.",
+      "issuer": "Sololearn",
+      "status": "Completed"
+    },
+    {
+      "id": "pythonCourse",
+      "title": "PyQuest: Learn Python in 3 Days",
+      "image": "../images/PyQuest — Learn Python in 3 Days-1.png",
+      "description": "Completed a focused Python course covering programming fundamentals, including variables, data types, control flow, functions, and problem-solving with code.",
+      "issuer": "PyQuest",
+      "status": "Completed"
+    },
+    {
+      "id": "cybersecurity",
+      "title": "Cybersecurity Basics",
+      "description": "Currently studying cybersecurity fundamentals, including common security concepts, risk management, the NIST Cybersecurity Framework, and how organizations protect systems.",
+      "issuer": "In Progress",
+      "status": "In Progress",
+      "targetDate": "6/26"
+    }
+  ]
+}
