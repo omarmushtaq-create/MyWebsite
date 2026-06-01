@@ -1,5 +1,6 @@
 // Centralized script that loads from data.json and dynamically populates all pages
-const siteRoot = new URL(".", document.currentScript?.src || window.location.href);
+// Always use the current page location (not script location) to resolve relative URLs correctly
+const siteRoot = new URL(".", window.location.href);
 
 let pageContent = {
     navigation: [],
