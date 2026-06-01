@@ -279,13 +279,22 @@ h3:hover {
 }
 
 /* ===== Navbar ===== */
+.navbar-container {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    pointer-events: none;
+    padding: 16px 24px;
+}
+
+.navbar-container > * {
+    pointer-events: auto;
+}
+
 .navbar {
     display: flex;
     justify-content: center;
     margin-top: 20px;
-    position: sticky;
-    top: 16px;
-    z-index: 10;
 }
 
 .navbar ul {
