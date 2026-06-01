@@ -1,37 +1,9 @@
-// Edit these lists to grow the home page without touching the HTML structure.
+// Edit data.json to grow the home page without touching the HTML structure.
 const siteRoot = new URL(".", document.currentScript?.src || window.location.href);
 
-const pageContent = {
-    navigation: [
-        { label: "Home", href: "#home", className: "active" },
-        {
-            label: "Projects",
-            href: "projects/",
-            children: [
-                { label: "Penny Doubler", href: "projects/pennyDoubler/" },
-                { label: "Proxmox", href: "projects/proxmoxProject/" },
-                { label: "Guacamole", href: "projects/guacamole/" },
-                { label: "Portainer", href: "projects/portainer/" },
-                { label: "Heimdal", href: "projects/heimdal/" },
-                { label: "IT Tools", href: "projects/itTools/" }
-            ]
-        },
-        {
-            label: "Certifications",
-            href: "certificates/",
-            children: [
-                { label: "All Certifications", href: "certificates/" },
-                { label: "In Progress", href: "certificates/#in-progress" }
-            ]
-        },
-        {
-            label: "Contact",
-            href: "contacts/",
-            children: [
-                { label: "Email Me", href: "mailto:omarmushtaq2029@gmail.com" }
-            ]
-        }
-    ],
+// Load data from data.json
+let pageContent = {
+    navigation: [],
     heroActions: [
         { label: "View Projects", href: "projects/", className: "hero-button-primary" },
         { label: "Contact Me", href: "contacts/", className: "hero-button-secondary" },
@@ -85,69 +57,95 @@ const pageContent = {
             ]
         }
     ],
-    quickLaunch: [
-        {
-            title: "Penny Doubler",
-            type: "Project",
-            href: "projects/pennyDoubler/",
-            keywords: "python math exponential growth calculator"
-        },
-        {
-            title: "Proxmox",
-            type: "Project",
-            href: "projects/proxmoxProject/",
-            keywords: "virtualization homelab server virtual machines"
-        },
-        {
-            title: "Guacamole",
-            type: "Project",
-            href: "projects/guacamole/",
-            keywords: "remote access browser lab systems"
-        },
-        {
-            title: "Portainer",
-            type: "Project",
-            href: "projects/portainer/",
-            keywords: "docker containers logs dashboard"
-        },
-        {
-            title: "Heimdal",
-            type: "Project",
-            href: "projects/heimdal/",
-            keywords: "self hosting containers services"
-        },
-        {
-            title: "IT Tools",
-            type: "Project",
-            href: "projects/itTools/",
-            keywords: "docker utilities encode decode convert"
-        },
-        {
-            title: "HTML Basics",
-            type: "Certification",
-            href: "certificates/",
-            keywords: "sololearn web structure semantic forms"
-        },
-        {
-            title: "Python Course",
-            type: "Certification",
-            href: "certificates/",
-            keywords: "pyquest variables functions control flow"
-        },
-        {
-            title: "Cybersecurity Basics",
-            type: "Certification",
-            href: "certificates/#in-progress",
-            keywords: "security nist risk current focus"
-        },
-        {
-            title: "Email Omar",
-            type: "Contact",
-            href: "mailto:omarmushtaq2029@gmail.com",
-            keywords: "contact feedback collaboration portfolio"
-        }
-    ]
+    quickLaunch: [],
+    projects: [],
+    certifications: []
 };
+
+// Fetch and load data from data.json
+fetch(new URL("data.json", siteRoot).href)
+    .then(response => response.json())
+    .then(data => {
+        pageContent.projects = data.projects || [];
+        pageContent.certifications = data.certifications || [];
+        
+        // Build navigation from projects
+        const projectsNav = pageContent.projects.length > 0 ? {
+            label: "Projects",
+            href: "projects/",
+            children: [
+                { label: "All Projects", href: "projects/" },
+                ...pageContent.projects.map(project => ({
+                    label: project.title,
+                    href: project.href
+                }))
+            ]
+        } : null;
+
+        // Build navigation from certifications
+        const certificationsNav = {
+            label: "Certifications",
+            href: "certificates/",
+            children: [
+                { label: "All Certifications", href: "certificates/" },
+                { label: "In Progress", href: "certificates/#in-progress" }
+            ]
+        };
+
+        // Set navigation
+        pageContent.navigation = [
+            { label: "Home", href: "#home", className: "active" },
+            ...(projectsNav ? [projectsNav] : []),
+            certificationsNav,
+            {
+                label: "Contact",
+                href: "contacts/",
+                children: [
+                    { label: "Email Me", href: "mailto:omarmushtaq2029@gmail.com" }
+                ]
+            }
+        ];
+
+        // Build quick launch from projects and certifications
+        pageContent.quickLaunch = [
+            ...pageContent.projects.map(project => ({
+                title: project.title,
+                type: "Project",
+                href: project.href,
+                keywords: project.keywords
+            })),
+            ...pageContent.certifications.map(cert => ({
+                title: cert.title,
+                type: "Certification",
+                href: cert.status === "In Progress" ? "certificates/#in-progress" : "certificates/",
+                keywords: cert.issuer.toLowerCase() + " " + cert.description.toLowerCase()
+            })),
+            {
+                title: "Email Omar",
+                type: "Contact",
+                href: "mailto:omarmushtaq2029@gmail.com",
+                keywords: "contact feedback collaboration portfolio"
+            }
+        ];
+
+        // Render all components
+        renderNavigation();
+        renderHeroActions();
+        renderHeroStats();
+        renderSkills();
+        renderBuildConsole();
+        renderQuickLaunch();
+    })
+    .catch(error => {
+        console.error("Error loading data.json:", error);
+        // Fallback: render what we can without the data
+        renderNavigation();
+        renderHeroActions();
+        renderHeroStats();
+        renderSkills();
+        renderBuildConsole();
+        renderQuickLaunch();
+    });
 
 const getRelativeHref = (href) => {
     if (href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) {
@@ -261,11 +259,6 @@ const renderSkills = () => {
     });
 };
 
-renderNavigation();
-renderHeroActions();
-renderHeroStats();
-renderSkills();
-
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const renderBuildConsole = () => {
@@ -325,8 +318,6 @@ const renderBuildConsole = () => {
 
     setActiveProfile(activeIndex);
 };
-
-renderBuildConsole();
 
 const renderQuickLaunch = () => {
     const launcher = document.createElement("section");
@@ -420,8 +411,6 @@ const renderQuickLaunch = () => {
 
     renderResults();
 };
-
-renderQuickLaunch();
 
 const revealItems = document.querySelectorAll(".scroll-reveal");
 
