@@ -285,6 +285,7 @@ h3:hover {
     z-index: 10;
     pointer-events: none;
     padding: 16px 24px;
+    overflow: visible;
 }
 
 .navbar-container > * {
@@ -305,9 +306,10 @@ h3:hover {
     align-items: center;
     border: 1px solid var(--line);
     border-radius: var(--radius-soft);
-    background: rgba(12, 14, 16, 0.72);
+    background: rgba(12, 14, 14, 0.72);
     backdrop-filter: blur(18px);
     box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+    overflow: visible;
 }
 
 .navbar a {

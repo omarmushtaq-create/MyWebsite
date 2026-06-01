@@ -208,15 +208,6 @@ const renderNavigation = () => {
             });
 
             listItem.append(toggle, menu);
-            
-            // FIX #1: Prevent dropdown from closing on hover by keeping it visible
-            listItem.addEventListener("mouseenter", () => {
-                menu.style.display = "block";
-            });
-            
-            listItem.addEventListener("mouseleave", () => {
-                menu.style.display = "";
-            });
         } else {
             listItem.append(createLink(item));
         }
