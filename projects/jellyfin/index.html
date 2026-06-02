@@ -11,30 +11,7 @@
 <body>
 <div class="navbar-container">
     <nav class="navbar">
-        <ul>
-            <li><a href="../">Home</a></li>
-            <li class="dropdown">
-                <a href="../projects/" class="dropdown-toggle">Projects</a>
-                <ul class="dropdown-menu">
-                    <li><a href="../projects/">All Projects</a></li>
-                    <!-- Other projects auto-populate from data.json -->
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="../certificates/" class="dropdown-toggle">Certifications</a>
-                <ul class="dropdown-menu">
-                    <li><a href="../certificates/">All Certifications</a></li>
-                    <li><a href="../certificates/#in-progress">In Progress</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="../contacts/" class="dropdown-toggle">Contact</a>
-                <ul class="dropdown-menu">
-                    <li><a href="../contacts/">Contact Page</a></li>
-                    <li><a href="mailto:omarmushtaq2029@gmail.com">Email Me</a></li>
-                </ul>
-            </li>
-        </ul>
+        <ul id="navList"></ul>
     </nav>
 </div>
 <main class="page-shell">
@@ -44,12 +21,21 @@
         <p class="page-lead">A self-hosted media server that allows users to stream and manage their media collection from anywhere.</p>
     </section>
 
-    <!-- Add your project content here -->
     <section class="scroll-reveal">
+        <img src="../../images/Jellyfin.png" alt="Jellyfin Interface" id="jellyfinImage" class="projectImages" decoding="async" width="1920" height="1200">
         <h2>About Jellyfin</h2>
         <p>Jellyfin is a free and open-source media system that puts you in control of managing and streaming your media. It is an alternative to the proprietary Emby and Plex, to provide media from a dedicated server to end-user devices via multiple apps.</p>
+        <p>In this project, I set up a Jellyfin server to organize and stream my personal media collection. This involved configuring libraries, managing user access, and ensuring smooth playback across different devices. Jellyfin allows for a completely private and customizable media experience without any subscription fees or tracking.</p>
+        
+        <h3>Key Features & Learning:</h3>
+        <ul>
+            <li><strong>Media Organization:</strong> Learned how to structure media files for automatic metadata retrieval and organization.</li>
+            <li><strong>Transcoding:</strong> Explored how Jellyfin handles real-time transcoding to ensure compatibility across various client devices.</li>
+            <li><strong>Privacy & Control:</strong> Gained experience in self-hosting sensitive data and maintaining full control over media access.</li>
+            <li><strong>Cross-Platform Access:</strong> Configured access for web browsers, mobile apps, and smart TVs.</li>
+        </ul>
     </section>
 </main>
-<script src="../script.js" defer></script>
+<script src="../../script.js" defer></script>
 </body>
 </html>
