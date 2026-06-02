@@ -1,4 +1,6 @@
 /* ===== Font ===== */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap');
+
 @font-face {
     font-family: 'retimoa';
     src: url("fonts/retimoa/Retimoa.otf") format('opentype');
@@ -6,25 +8,27 @@
 }
 
 :root {
-    --bg: #111315;
-    --bg-2: #171a1f;
-    --panel: rgba(255, 255, 255, 0.075);
-    --panel-strong: rgba(255, 255, 255, 0.115);
-    --line: rgba(255, 255, 255, 0.14);
-    --line-strong: rgba(255, 255, 255, 0.22);
-    --text: #edf4f2;
-    --muted: rgba(237, 244, 242, 0.75);
-    --cyan: #38d6c7;
-    --teal: #14a88c;
-    --coral: #ff6b5f;
-    --amber: #f6c85f;
-    --violet: #7c77ff;
-    --shadow: 0 22px 70px rgba(0, 0, 0, 0.34);
-    --shadow-soft: 0 16px 42px rgba(0, 0, 0, 0.22);
-    --radius: 8px;
-    --radius-soft: 12px;
-    --display-font: 'retimoa', Georgia, serif;
-    --body-font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --bg: #f0f4ff;
+    --bg-2: #e0e7ff;
+    --panel: rgba(255, 255, 255, 0.7);
+    --panel-strong: rgba(255, 255, 255, 0.85);
+    --line: rgba(255, 255, 255, 0.8);
+    --line-strong: rgba(255, 255, 255, 0.9);
+    --text: #3d4455;
+    --muted: #5d667a;
+    --accent: #6366f1;
+    --secondary: #ec4899;
+    --cyan: var(--accent);
+    --teal: #4f46e5;
+    --coral: var(--secondary);
+    --amber: #f59e0b;
+    --violet: #8b5cf6;
+    --shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.03);
+    --radius: 100px;
+    --radius-soft: 32px;
+    --display-font: 'Quicksand', sans-serif;
+    --body-font: 'Quicksand', sans-serif;
 }
 
 @property --shine-angle {
@@ -51,19 +55,13 @@ body {
     overflow-x: hidden;
     color: var(--text);
     font-family: var(--body-font);
-    background:
-        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-        linear-gradient(120deg, rgba(56, 214, 199, 0.2), transparent 30%),
-        linear-gradient(250deg, rgba(255, 107, 95, 0.18), transparent 34%),
-        linear-gradient(145deg, var(--bg), #191a21 58%, #101214);
-    background-size: 44px 44px, 44px 44px, auto, auto, auto;
+    background: linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
     background-attachment: fixed;
 }
 
 ::selection {
-    background: rgba(246, 200, 95, 0.86);
-    color: #111315;
+    background: var(--accent);
+    color: #fff;
 }
 
 ::-webkit-scrollbar {
@@ -169,9 +167,7 @@ a {
     padding: 42px 36px;
     border: 1px solid var(--line);
     border-radius: var(--radius-soft);
-    background:
-        linear-gradient(135deg, rgba(56, 214, 199, 0.14), rgba(255, 255, 255, 0.06) 45%, rgba(255, 107, 95, 0.1)),
-        rgba(17, 19, 21, 0.74);
+    background: var(--panel);
     box-shadow: var(--shadow);
     text-align: center;
     backdrop-filter: blur(16px);
@@ -246,14 +242,12 @@ h1 {
     font-size: clamp(38px, 6vw, 76px);
     text-align: center;
     margin: 48px 0 0;
-    letter-spacing: 0;
-    background: linear-gradient(90deg, var(--text), var(--cyan), var(--amber), var(--coral), var(--text));
-    background-size: 240% 100%;
+    letter-spacing: -0.02em;
+    background: linear-gradient(to right, var(--accent), var(--secondary));
     background-clip: text;
     -webkit-background-clip: text;
-    text-shadow: 0 0 28px rgba(56, 214, 199, 0.25);
-    animation: titleGradient 8s ease-in-out infinite;
-    transition: transform 0.3s ease, text-shadow 0.3s ease;
+    font-weight: 700;
+    transition: transform 0.3s ease;
 }
 
 h3 {
@@ -305,10 +299,10 @@ h3:hover {
     padding: 8px;
     align-items: center;
     border: 1px solid var(--line);
-    border-radius: var(--radius-soft);
-    background: rgba(12, 14, 14, 0.72);
-    backdrop-filter: blur(18px);
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+    border-radius: var(--radius);
+    background: var(--panel);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     overflow: visible;
 }
 
@@ -328,10 +322,10 @@ h3:hover {
 
 .navbar a:hover,
 .navbar a.active {
-    background: rgba(56, 214, 199, 0.13);
-    color: var(--cyan);
+    background: var(--accent);
+    color: #fff;
     transform: translateY(-2px);
-    box-shadow: inset 0 -2px 0 currentColor;
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
 }
 
 .dropdown {
@@ -589,30 +583,21 @@ h3:hover {
     min-height: 38px;
     padding: 0 14px;
     border-radius: var(--radius);
-    border: 1px solid rgba(56, 214, 199, 0.3);
-    background: rgba(56, 214, 199, 0.09);
+    border: 1px solid var(--line);
+    background: #fff;
     color: var(--text);
     font-size: 14px;
-    font-weight: 850;
+    font-weight: 700;
+    box-shadow: var(--shadow-soft);
     transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
-}
-
-.skill-pill:nth-child(3n + 2) {
-    border-color: rgba(255, 107, 95, 0.34);
-    background: rgba(255, 107, 95, 0.09);
-}
-
-.skill-pill:nth-child(3n) {
-    border-color: rgba(246, 200, 95, 0.34);
-    background: rgba(246, 200, 95, 0.09);
 }
 
 .skill-pill:hover {
     transform: translateY(-3px) rotate(-1deg);
-    border-color: var(--line-strong);
-    background: var(--panel-strong);
-    color: var(--cyan);
-    box-shadow: 0 10px 24px rgba(56, 214, 199, 0.16);
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 10px 24px rgba(99, 102, 241, 0.16);
 }
 
 .scroll-cue {
@@ -647,7 +632,7 @@ h3:hover {
     grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.9fr);
     gap: 40px;
     align-items: center;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.045));
+    background: var(--panel);
     border: 1px solid var(--line);
     border-radius: var(--radius-soft);
     backdrop-filter: blur(16px);
@@ -668,9 +653,7 @@ h3:hover {
     align-items: stretch;
     border: 1px solid var(--line);
     border-radius: var(--radius-soft);
-    background:
-        linear-gradient(145deg, rgba(124, 119, 255, 0.12), rgba(255, 255, 255, 0.06) 48%, rgba(56, 214, 199, 0.12)),
-        rgba(13, 15, 18, 0.86);
+    background: var(--panel);
     box-shadow: var(--shadow);
     backdrop-filter: blur(16px);
 }
@@ -748,12 +731,10 @@ h3:hover {
     z-index: 1;
     overflow: hidden;
     min-height: 300px;
-    border: 1px solid rgba(56, 214, 199, 0.26);
-    border-radius: var(--radius);
-    background:
-        radial-gradient(circle at top right, rgba(56, 214, 199, 0.14), transparent 36%),
-        linear-gradient(180deg, rgba(6, 8, 10, 0.96), rgba(11, 14, 17, 0.92));
-    box-shadow: inset 0 0 32px rgba(56, 214, 199, 0.08), var(--shadow-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-soft);
+    background: #fff;
+    box-shadow: var(--shadow);
 }
 
 .console-window::after {
@@ -795,12 +776,11 @@ h3:hover {
     min-height: 236px;
     margin: 0;
     padding: 20px;
-    color: #aef8e8;
+    color: var(--text);
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
     font-size: clamp(14px, 2vw, 16px);
     line-height: 1.7;
     white-space: pre-wrap;
-    text-shadow: 0 0 14px rgba(56, 214, 199, 0.2);
 }
 
 /* ===== Image ===== */
@@ -812,7 +792,7 @@ h3:hover {
     object-fit: contain;
     border: 1px solid var(--line);
     border-radius: var(--radius-soft);
-    background: rgba(255, 255, 255, 0.06);
+    background: #fff;
     box-shadow: var(--shadow);
 }
 
@@ -885,10 +865,9 @@ h3:hover {
     position: relative;
     overflow: hidden;
     padding: 28px;
-    border-radius: var(--radius);
+    border-radius: var(--radius-soft);
     border: 1px solid var(--line);
-    background: linear-gradient(150deg, var(--panel-strong), rgba(255, 255, 255, 0.045));
-    backdrop-filter: blur(14px);
+    background: #fff;
     box-shadow: var(--shadow-soft);
     transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
@@ -898,7 +877,7 @@ h3:hover {
 .contact-card:hover,
 .contact-note:hover {
     transform: translateY(-6px);
-    border-color: rgba(56, 214, 199, 0.38);
+    border-color: var(--accent);
     box-shadow: var(--shadow);
 }
 
@@ -1036,24 +1015,24 @@ h3:hover {
     min-height: 48px;
     margin-top: auto;
     padding: 0 18px;
-    border: 1px solid rgba(56, 214, 199, 0.34);
+    border: none;
     border-radius: var(--radius);
-    background: linear-gradient(135deg, rgba(56, 214, 199, 0.95), rgba(20, 168, 140, 0.95));
-    color: #061412;
+    background: var(--accent);
+    color: #fff;
     cursor: pointer;
     font-family: var(--body-font);
     font-size: 15px;
-    font-weight: 950;
+    font-weight: 700;
     text-align: center;
     text-decoration: none;
     transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-    box-shadow: 0 12px 24px rgba(20, 168, 140, 0.18);
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
 }
 
 .projectButton:hover {
     transform: translateY(-4px);
-    background: linear-gradient(135deg, var(--amber), var(--coral));
-    box-shadow: 0 16px 34px rgba(255, 107, 95, 0.22);
+    background: var(--secondary);
+    box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
 }
 
 /* ===== Email Link ===== */
@@ -1062,6 +1041,11 @@ h3:hover {
     grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.9fr);
     gap: 24px;
     align-items: stretch;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-soft);
+    padding: 36px;
+    box-shadow: var(--shadow);
 }
 
 .contact-note {
