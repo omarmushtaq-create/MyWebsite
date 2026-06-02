@@ -56,6 +56,14 @@
       "tag": "AI",
       "description": "A self-hosted AI interface for running and managing large language models locally.",
       "keywords": "self hosted ai llm"
+    },
+    {
+      "id": "jellyfin",
+      "title": "Jellyfin",
+      "href": "projects/jellyfin/",
+      "tag": "Media Server",
+      "description": "A self-hosted media server that allows users to stream and manage their media collection from anywhere.",
+      "keywords": "self hosted media server"
     }
   ],
   "certifications": [
