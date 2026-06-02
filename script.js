@@ -12,7 +12,7 @@ let pageContent = {
     ],
     heroStats: [
         { value: "7+", label: "Years Programming" },
-        { value: "6", label: "Featured Projects" },
+        { value: "8", label: "Featured Projects" },
         { value: "IT", label: "Platt Tech Focus" }
     ],
     skills: ["Python", "C++", "HTML", "CSS", "JavaScript", "Docker", "Proxmox"],
