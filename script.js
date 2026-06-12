@@ -72,8 +72,12 @@ const loadData = async () => {
         const data = await response.json();
         pageContent.projects = data.projects || [];
         pageContent.certifications = data.certifications || [];
+        pageContent.heroStats = data.heroStats || pageContent.heroStats;
+        pageContent.skills = data.skills || pageContent.skills;
         
     // Build navigation dynamically
+    const customNav = data.navigation || [];
+    
     const projectsNav = pageContent.projects.length > 0 ? {
         label: "Projects",
         href: "projects/",
@@ -105,6 +109,7 @@ const loadData = async () => {
 
         pageContent.navigation = [
             { label: "Home", href: "/", className: "active" },
+            ...customNav,
             ...(projectsNav ? [projectsNav] : []),
             certificationsNav,
             {

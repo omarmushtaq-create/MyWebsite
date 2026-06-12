@@ -1,18 +1,18 @@
-# How to Add Projects & Certifications
+# How to Add Projects, Certifications & Custom Content
 
-This guide explains how to add new projects and certifications to your portfolio website with minimal effort.
+This guide explains how to manage your portfolio website, including adding new projects, certifications, top bar elements, and custom pages with minimal effort.
 
 ## Overview
 
-Your website now uses a centralized **`data.json`** file to manage all projects and certifications. This means:
-- ✅ Add items in **one place** instead of three
+Your website uses a centralized **`data.json`** file to manage almost all content. This means:
+- ✅ Add items in **one place** instead of many
 - ✅ Navigation, search, and display all update automatically
-- ✅ No HTML editing needed for basic content
+- ✅ No HTML editing needed for most content updates
 - ✅ Easy to maintain and scale
 
 ---
 
-## Adding a New Project
+## 1. Adding a New Project
 
 ### Step 1: Add to `data.json`
 
@@ -23,6 +23,8 @@ Open `data.json` and add a new entry to the `"projects"` array:
   "id": "myNewProject",
   "title": "My New Project",
   "href": "projects/myNewProject/",
+  "tag": "Python",
+  "description": "A short description for the project card.",
   "keywords": "python docker web automation"
 }
 ```
@@ -31,12 +33,14 @@ Open `data.json` and add a new entry to the `"projects"` array:
 - `id`: Unique identifier (use camelCase, no spaces)
 - `title`: Display name of the project
 - `href`: URL path to the project page (must match folder name)
+- `tag`: Category shown on the card (e.g., "Python", "Web")
+- `description`: A brief summary of the project
 - `keywords`: Space-separated search terms (helps with Quick Launch search)
 
 ### Step 2: Create the Project Folder & Page
 
 1. Create a new folder: `projects/myNewProject/`
-2. Create `projects/myNewProject/index.html` with your project content
+2. Create `projects/myNewProject/index.html` using the template below.
 
 **Template:**
 ```html
@@ -48,35 +52,12 @@ Open `data.json` and add a new entry to the `"projects"` array:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#111315">
     <meta name="description" content="A description of my new project.">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../../styles.css">
 </head>
 <body>
     <div class="navbar-container">
         <nav class="navbar">
-            <ul>
-                <li><a href="../">Home</a></li>
-                <li class="dropdown">
-                    <a href="../projects/" class="dropdown-toggle">Projects</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="../projects/">All Projects</a></li>
-                        <!-- Other projects auto-populate from data.json -->
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="../certificates/" class="dropdown-toggle">Certifications</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="../certificates/">All Certifications</a></li>
-                        <li><a href="../certificates/#in-progress">In Progress</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="../contacts/" class="dropdown-toggle">Contact</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="../contacts/">Contact Page</a></li>
-                        <li><a href="mailto:omarmushtaq2029@gmail.com">Email Me</a></li>
-                    </ul>
-                </li>
-            </ul>
+            <ul id="navList"></ul> <!-- Navigation auto-populates -->
         </nav>
     </div>
     <main class="page-shell">
@@ -92,21 +73,14 @@ Open `data.json` and add a new entry to the `"projects"` array:
             <p>Describe your project, its features, technologies used, and what you learned.</p>
         </section>
     </main>
-    <script src="../script.js" defer></script>
+    <script src="../../script.js" defer></script>
 </body>
 </html>
 ```
 
-### That's it!
-
-Once you save `data.json`, the new project will automatically appear in:
-- ✅ Navigation menu (Projects dropdown)
-- ✅ Quick Launch search (press `/` or click the button)
-- ✅ Home page console profiles (if relevant)
-
 ---
 
-## Adding a New Certification
+## 2. Adding a New Certification
 
 ### Step 1: Add to `data.json`
 
@@ -118,7 +92,7 @@ Open `data.json` and add a new entry to the `"certifications"` array:
   "id": "newCertId",
   "title": "New Certification Name",
   "image": "../images/certificate-image.png",
-  "description": "Description of what you learned in this course.",
+  "description": "Description of what you learned.",
   "issuer": "Course Provider Name",
   "status": "Completed"
 }
@@ -136,96 +110,77 @@ Open `data.json` and add a new entry to the `"certifications"` array:
 }
 ```
 
-**Fields:**
-- `id`: Unique identifier (use camelCase)
-- `title`: Name of the certification
-- `image`: Path to certificate image (only for completed certs)
-- `description`: What you learned or are learning
-- `issuer`: Organization that issued/offers the certification
-- `status`: Either `"Completed"` or `"In Progress"`
-- `targetDate`: Expected completion date (only for in-progress certifications)
-
 ### Step 2: Add Certificate Image (if completed)
 
-1. Save your certificate image to the `images/` folder
-2. Update the `"image"` field in `data.json` to match the filename
-
-**Supported formats:** PNG, JPG, WebP
-
-### That's it!
-
-The new certification will automatically appear in:
-- ✅ Certifications page (`certificates/`)
-- ✅ Quick Launch search
-- ✅ Correct section (Completed or In Progress)
-- ✅ Updated certification count
+1. Save your certificate image to the `images/` folder.
+2. Update the `"image"` field in `data.json` to `../images/your-filename.png`.
 
 ---
 
-## Examples
+## 3. Adding New Top Bar Elements (Navigation)
 
-### Example: Adding a Python Django Project
+You can add custom links to the top navigation bar directly in `data.json` using the `"navigation"` array.
 
-**In `data.json`:**
+### Add a Simple Link
 ```json
-{
-  "id": "djangoBlog",
-  "title": "Django Blog Platform",
-  "href": "projects/djangoBlog/",
-  "keywords": "python django web database backend api"
-}
+"navigation": [
+  { "label": "GitHub", "href": "https://github.com/yourusername" }
+]
 ```
 
-**Create folder:** `projects/djangoBlog/index.html`
-
-### Example: Adding a Security+ Certification
-
-**In `data.json`:**
+### Add a Dropdown Menu
 ```json
-{
-  "id": "securityPlus",
-  "title": "CompTIA Security+",
-  "description": "Studying for the Security+ certification covering cryptography, identity management, risk management, and security controls.",
-  "issuer": "CompTIA",
-  "status": "In Progress",
-  "targetDate": "8/30"
-}
+"navigation": [
+  {
+    "label": "Resources",
+    "href": "#",
+    "children": [
+      { "label": "Blog", "href": "https://blog.example.com" },
+      { "label": "Wiki", "href": "/wiki/" }
+    ]
+  }
+]
 ```
 
 ---
 
-## Tips & Best Practices
+## 4. Creating and Adding New Pages
 
-✅ **Do:**
-- Use descriptive keywords in projects (helps search)
-- Keep project folder names simple (no spaces, camelCase)
-- Use consistent image sizes for certifications
-- Update the description to reflect what the project/cert is about
+If you want to add a completely new section (like a "Tools" page):
 
-❌ **Avoid:**
-- Duplicate project IDs or titles
-- Using special characters in folder names
-- Images larger than 2MB (compress first)
-- Very long descriptions (keep it concise)
+1. **Create the folder and file:** e.g., `tools/index.html`.
+2. **Use the Page Template:** Use the same template as the Project page above.
+3. **Register in Navigation:** Add the new page to the `"navigation"` array in `data.json`.
+
+---
+
+## 5. Modifying Hero Stats & Skills
+
+The stats and skill pills on the home page are also managed in `data.json`.
+
+### Update Stats
+Modify the `"heroStats"` array in `data.json`:
+```json
+"heroStats": [
+  { "value": "10+", "label": "Projects Completed" },
+  { "value": "2026", "label": "Graduation Year" }
+]
+```
+
+### Update Skills
+Modify the `"skills"` array in `data.json`:
+```json
+"skills": ["Python", "Docker", "AWS", "Linux"]
+```
 
 ---
 
 ## Troubleshooting
 
-**New project doesn't appear in navigation?**
-- Check that `href` matches the actual folder path
-- Make sure JSON syntax is valid (no trailing commas)
-- Browser may need to refresh (hard refresh: Ctrl+Shift+R)
-
-**Quick Launch search not finding items?**
-- Ensure `keywords` are relevant and descriptive
-- Keywords are case-insensitive, so "Python" and "python" both work
-- The search matches title, type, and keywords
-
-**Certificate image not showing?**
-- Verify the `image` path is correct and relative
-- Check that the file exists in the `images/` folder
-- Ensure the filename case matches exactly (case-sensitive on some systems)
+**Changes not showing up?**
+1. **JSON Syntax:** Ensure your `data.json` is valid. A missing or extra comma will break the site.
+2. **Hard Refresh:** Press `Ctrl + Shift + R` (Windows) or `Cmd + Shift + R` (Mac) to clear the browser cache.
+3. **Console Errors:** Right-click the page, select "Inspect", and go to the "Console" tab to see if there are any error messages.
 
 ---
 
@@ -233,29 +188,14 @@ The new certification will automatically appear in:
 
 ```
 MyWebsite/
-├── data.json                 ← Edit here to add projects/certs
-├── script.js                 ← Auto-loads from data.json
-├── index.html
-├── styles.css
-├── certificates/
-│   └── index.html
-├── contacts/
-│   └── index.html
-├── projects/
-│   ├── pennyDoubler/
-│   │   └── index.html
-│   ├── proxmoxProject/
-│   │   └── index.html
-│   └── myNewProject/         ← Create new folders here
-│       └── index.html        ← With index.html in each
-└── images/
-    ├── certificate1.png
-    ├── certificate2.png
-    └── certificate3.png      ← Add cert images here
+├── data.json                 ← Central content management
+├── script.js                 ← Dynamic loading logic
+├── index.html                ← Homepage
+├── styles.css                ← Global styles
+├── images/                   ← Images and certificates
+├── projects/                 ← Individual project pages
+│   └── myProject/
+│       └── index.html
+└── newPage/                  ← Your custom pages
+    └── index.html
 ```
-
----
-
-## Questions?
-
-If you need help or want to customize further, all the content is centralized in `data.json` making it easy to manage!
