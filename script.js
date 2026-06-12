@@ -108,7 +108,7 @@ const loadData = async () => {
         };
 
         pageContent.navigation = [
-            { label: "Home", href: "/", className: "active" },
+            { label: "Home", href: "/" },
             ...customNav,
             ...(projectsNav ? [projectsNav] : []),
             certificationsNav,
@@ -124,13 +124,22 @@ const loadData = async () => {
         
         // Ensure only the correct link is active
         const currentPath = window.location.pathname;
+
         pageContent.navigation.forEach(item => {
             const itemUrl = new URL(getRelativeHref(item.href));
             const itemPath = itemUrl.pathname;
+            const siteRootPath = new URL(".", siteRoot).pathname;
             
-            // Basic matching for home, and matching directory roots
-            const isHome = (currentPath === "/" || currentPath.endsWith("/index.html")) && (itemPath === "/" || itemPath.endsWith("/index.html"));
-            const isMatch = isHome || (itemPath !== "/" && currentPath.includes(itemPath));
+            let isMatch = false;
+            if (itemPath === siteRootPath || (itemPath.endsWith("/index.html") && itemPath.replace("index.html", "") === siteRootPath)) {
+                // Home matches if current path is root or root index.html relative to siteRoot
+                const relativeCurrent = currentPath.replace(siteRootPath, "");
+                isMatch = relativeCurrent === "" || relativeCurrent === "index.html";
+            } else {
+                // Other items match if currentPath starts with itemPath
+                // Ensure we don't match "/" for everything
+                isMatch = itemPath !== siteRootPath && currentPath.includes(itemPath);
+            }
             
             if (isMatch) {
                 item.className = (item.className || "") + " active";
@@ -151,12 +160,21 @@ const loadData = async () => {
 
         // Ensure active class on fallback navigation
         const currentPath = window.location.pathname;
+        const siteRootPath = new URL(".", siteRoot).pathname;
+
         pageContent.navigation.forEach(item => {
             const itemUrl = new URL(getRelativeHref(item.href));
             const itemPath = itemUrl.pathname;
-            const isHome = (currentPath === "/" || currentPath.endsWith("/index.html")) && (itemPath === "/" || itemPath.endsWith("/index.html"));
-            const isMatch = isHome || (itemPath !== "/" && currentPath.includes(itemPath));
+            
+            let isMatch = false;
+            if (itemPath === siteRootPath || (itemPath.endsWith("/index.html") && itemPath.replace("index.html", "") === siteRootPath)) {
+                const relativeCurrent = currentPath.replace(siteRootPath, "");
+                isMatch = relativeCurrent === "" || relativeCurrent === "index.html";
+            } else {
+                isMatch = itemPath !== siteRootPath && currentPath.includes(itemPath);
+            }
             if (isMatch) item.className = "active";
+            else item.className = (item.className || "").replace("active", "").trim();
         });
     } finally {
         // Build quick launch entries (if data failed, map will work on empty arrays)
@@ -190,6 +208,7 @@ const loadData = async () => {
         renderQuickLaunch();
         renderProjectsPage();
         renderCertificationsPage();
+        renderBlogPage();
 
         // Re-initialize scroll reveal for dynamically added items
         const newRevealItems = document.querySelectorAll(".scroll-reveal");
@@ -230,6 +249,11 @@ if (document.readyState === 'loading') {
     }
     loadData();
 }
+
+const renderBlogPage = () => {
+    // This is a placeholder for dynamic blog rendering if needed in future.
+    // Currently, the blog content is static in index.html to serve as a template.
+};
 
 const getRelativeHref = (href) => {
     if (!href) return "#";

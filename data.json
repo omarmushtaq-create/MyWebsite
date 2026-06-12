@@ -1,6 +1,6 @@
 {
   "navigation": [
-    { "label": "GitHub", "href": "https://github.com/omarmushtaq" }
+    { "label": "Blog", "href": "Blog/" }
   ],
   "heroStats": [
     { "value": "7+", "label": "Years Programming" },
