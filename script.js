@@ -232,7 +232,7 @@ if (document.readyState === 'loading') {
             document.documentElement.setAttribute("data-theme", savedTheme);
             const metaTheme = document.querySelector('meta[name="theme-color"]');
             if (metaTheme) {
-                metaTheme.setAttribute("content", savedTheme === "dark" ? "#0f172a" : "#f0f4ff");
+                metaTheme.setAttribute("content", savedTheme === "dark" ? "#121212" : "#ffffff");
             }
         }
         loadData();
@@ -244,7 +244,7 @@ if (document.readyState === 'loading') {
         document.documentElement.setAttribute("data-theme", savedTheme);
         const metaTheme = document.querySelector('meta[name="theme-color"]');
         if (metaTheme) {
-            metaTheme.setAttribute("content", savedTheme === "dark" ? "#0f172a" : "#f0f4ff");
+            metaTheme.setAttribute("content", savedTheme === "dark" ? "#121212" : "#ffffff");
         }
     }
     loadData();
@@ -337,7 +337,7 @@ const renderNavigation = () => {
             // Update meta theme-color
             const metaTheme = document.querySelector('meta[name="theme-color"]');
             if (metaTheme) {
-                metaTheme.setAttribute("content", nextTheme === "dark" ? "#0f172a" : "#f0f4ff");
+                metaTheme.setAttribute("content", nextTheme === "dark" ? "#121212" : "#ffffff");
             }
         });
         
@@ -693,7 +693,10 @@ revealItems.forEach((item) => revealObserver.observe(item));
 
 const parallaxItems = document.querySelectorAll("[data-parallax-speed]");
 
+let parallaxFrame;
+
 const updateParallax = () => {
+    parallaxFrame = undefined;
     const scrollY = window.scrollY;
 
     parallaxItems.forEach((item) => {
@@ -702,8 +705,14 @@ const updateParallax = () => {
     });
 };
 
-updateParallax();
-window.addEventListener("scroll", updateParallax, { passive: true });
+if (!prefersReducedMotion && parallaxItems.length) {
+    updateParallax();
+    window.addEventListener("scroll", () => {
+        if (parallaxFrame === undefined) {
+            parallaxFrame = window.requestAnimationFrame(updateParallax);
+        }
+    }, { passive: true });
+}
 
 const shouldAnimateNavigation = (link) => {
     if (!link || prefersReducedMotion) {
