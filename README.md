@@ -8,7 +8,7 @@
 
 ## About
 
-I'm Omar Mushtaq, a 15-year-old IT student at Platt Tech with 7+ years of programming experience. This portfolio showcases my projects, skills, and active learning journey in web development, Python, Docker, and virtualization.
+I'm Omar Mushtaq, a 15-year-old IT student at Platt Tech with 4+ years of programming experience. This portfolio showcases my projects, skills, and active learning journey in web development, Python, Docker, and virtualization.
 
 ### Core Skills
 
