@@ -36,9 +36,9 @@ I'm Omar Mushtaq, a 15-year-old IT student at Platt Tech with 7+ years of progra
 6. **IT Tools** - Docker utilities for encoding, decoding, and data conversion
 
 ###  **Certifications**
-- ✅ **HTML Basics** (Sololearn) - Web structure, semantics, forms
-- ✅ **PyQuest: Learn Python in 3 Days** - Programming fundamentals and problem-solving
-- 🔄 **Cybersecurity Basics** (In Progress) - NIST framework, risk management, security concepts
+-  **HTML Basics** (Sololearn) - Web structure, semantics, forms
+-  **PyQuest: Learn Python in 3 Days** - Programming fundamentals and problem-solving
+-  **Cybersecurity Basics** (In Progress) - NIST framework, risk management, security concepts
 
 ###  **Contact**
 - **Email**: [omarmushtaq2029@gmail.com](mailto:omarmushtaq2029@gmail.com)
@@ -46,7 +46,7 @@ I'm Omar Mushtaq, a 15-year-old IT student at Platt Tech with 7+ years of progra
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Category | Technologies |
 |----------|--------------|
@@ -58,7 +58,7 @@ I'm Omar Mushtaq, a 15-year-old IT student at Platt Tech with 7+ years of progra
 
 ---
 
-## 📦 Project Structure
+## Project Structure
 
 ```
 MyWebsite/
