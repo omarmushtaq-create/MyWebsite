@@ -1153,7 +1153,7 @@ h3:hover {
     border-radius: var(--radius-pill);
     background: rgba(99, 102, 241, 0.1);
     border: 1px solid rgba(99, 102, 241, 0.2);
-    color: var(--accent);
+    color: #3f3b6a;
     font-size: 13px;
     font-weight: 700;
 }

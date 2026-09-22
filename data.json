@@ -93,12 +93,12 @@
       "status": "Completed"
     },
     {
-      "id": "cybersecurity",
-      "title": "Cybersecurity Basics",
-      "description": "Currently studying cybersecurity fundamentals, including common security concepts, risk management, the NIST Cybersecurity Framework, and how organizations protect systems.",
+      "id": "CompTIA",
+      "title": "CompTIA A+",
+      "description": "Right now i am learning the basics of Information technology and computers",
       "issuer": "CompTIA",
       "status": "In Progress",
-      "targetDate": "6/26"
+      "targetDate": "12/26"
     }
   ]
 }
