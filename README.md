@@ -46,17 +46,6 @@ I'm Omar Mushtaq, a 15-year-old IT student at Platt Tech with 4+ years of progra
 
 ---
 
-## Tech Stack
-
-| Category | Technologies |
-|----------|--------------|
-| **Frontend** | HTML, CSS, JavaScript |
-| **Backend/Scripting** | Python, C++ |
-| **Infrastructure** | Docker, Proxmox, Portainer |
-| **Deployment** | GitHub Pages |
-| **Features** | Responsive design, parallax effects, smooth animations |
-
----
 
 ## Project Structure
 
